@@ -7,5 +7,6 @@ namespace Pelicula.Api.Entities
         public int Id { get; set; }
         [MaxLength(50)]
         public string Nombre { get; set; }
+        public HashSet<Pelicula> Peliculas { get; set; }
     }
 }
