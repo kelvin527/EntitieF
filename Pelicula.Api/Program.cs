@@ -13,9 +13,11 @@ builder.Services.AddSwaggerGen();
 //            op.UseSqlServer(builder.Configuration.GetConnectionString("connection")));
 var connectionString = builder.Configuration.GetConnectionString("connection");
 builder.Services.AddDbContext<Context>(opciones =>
-opciones .UseSqlServer(connectionString,
-sqlServer => sqlServer.UseNetTopologySuite())); 
+{
+    opciones.UseSqlServer(connectionString, sqlServer => sqlServer.UseNetTopologySuite());
+    opciones.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);//esto esto para ponerle la funcionalidad por defecto a Context
 
+});
 
 
 
