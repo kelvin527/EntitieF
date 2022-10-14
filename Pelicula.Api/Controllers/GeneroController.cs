@@ -22,13 +22,13 @@ namespace Pelicula.Api.Controllers
             //AsNoTracking se usa para que los Get respondan mas rapido y se puede inyectar junto al DBCONTEXT
             //AsTraking esto sobre escribe el AsNotraking inyectado y esto sirve para darle seguimiento a los cambios en la Bd(Buscar mejor explicacion)
 
-            return await context.Generos.ToListAsync();
+            return await context.Generos.OrderBy(x => x.Nombre).ToListAsync();//ordenado alfabeticamente por el nombre
         }
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Genero>> GetId(int id)
         {
-            var comprobar= await context.Generos.FirstOrDefaultAsync(x=> x.Id==id);
-            if(comprobar is null)
+            var comprobar = await context.Generos.FirstOrDefaultAsync(x => x.Id == id);
+            if (comprobar is null)
             {
                 return NotFound("El id no esta registrado");
             }
@@ -38,8 +38,8 @@ namespace Pelicula.Api.Controllers
         public async Task<ActionResult<Genero>> Getletra()
         {
             //  StartsWith sirve para encontrar nombre que concidan con una letra
-            var comprobar = await context.Generos.FirstOrDefaultAsync(g=> g.Nombre.StartsWith("g"));
-            if(comprobar is null) { return NotFound("No existe nombre con esa letra"); }
+            var comprobar = await context.Generos.FirstOrDefaultAsync(g => g.Nombre.StartsWith("g"));
+            if (comprobar is null) { return NotFound("No existe nombre con esa letra"); }
             return Ok(comprobar);
         }
         [HttpGet("nombre")]
@@ -50,6 +50,18 @@ namespace Pelicula.Api.Controllers
             g.Nombre.StartsWith("b")).ToListAsync();
         }
 
+        [HttpGet("paginacion")]
+        public async Task<ActionResult<IEnumerable<Genero>>> GetPaginacion(int pagina = 1)
+        {
+            //esta logica muestra dos registro por el id del parametro
+            var cantidadRegistrosPorPagina = 2;
+            var generos = await context.Generos
+             .Skip((pagina - 1) * cantidadRegistrosPorPagina)//skip sirve para saltar un registro
+            .Take(cantidadRegistrosPorPagina)//take nos sirve para mostrar una x cantida de registro
+            .ToListAsync();
+            return generos;
+
+        }
 
     }
 }
