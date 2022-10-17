@@ -57,7 +57,7 @@ namespace Pelicula.Api.Controllers
             var cantidadRegistrosPorPagina = 2;
             var generos = await context.Generos
              .Skip((pagina - 1) * cantidadRegistrosPorPagina)//skip sirve para saltar un registro
-            .Take(cantidadRegistrosPorPagina)//take nos sirve para mostrar una x cantida de registro
+            .Take(cantidadRegistrosPorPagina)//take nos sirve para mostrar una x cantida de registro EN UNA PAGINA
             .ToListAsync();
             return generos;
 
