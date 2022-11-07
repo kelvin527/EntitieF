@@ -23,7 +23,9 @@ namespace Pelicula.Api.Entities
 
             /*este metodo es para que todas las configuraciones de las Entidades que se encuentran
              es una carpeta con el mismo nombre puedan ejecutarse*/
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());//Assembly sirve para escanear el proyecto
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());/*Assembly sirve para escanear el proyecto buscando configuraciones de entidades
+                                                                                           y ejecutarla como si estuvieran en el api fluente*/
+
 
             /*asi se hace una llave primaria en un api fluente
            // modelBuilder.Entity<Genero>().HasKey(x => x.Id);*/
